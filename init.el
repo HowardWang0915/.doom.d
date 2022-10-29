@@ -192,3 +192,6 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+;; Give me visual line mode! This has to be loaded early
+(setq evil-respect-visual-line-mode t)

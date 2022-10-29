@@ -31,7 +31,8 @@
 ;;
 ;; We first define the setup for general doom
 (setq doom-font (font-spec :family "JetBrains Mono" :size 18)
-      doom-variable-pitch-font (font-spec :family "Source Serif Pro" :size 18)
+      doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 18)
+      doom-serif-font (font-spec :family "Source Serif Pro" :size 18)
       doom-big-font (font-spec :family "JetBrains Mono" :size 24))
 ;;
 ;; This portion is for the org mode font setup
