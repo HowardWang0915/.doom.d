@@ -240,12 +240,14 @@ Callers of this function already widen the buffer view."
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "|" "DONE(d!)")
           (sequence "WAITING(w@/!)" "INACTIVE(i)" "LATER(l)" "|" "CANCELED(c@/!)")))
+  (setq
+   org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿"))
   (howard/org-font-setup))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+(setq doom-theme 'doom-palenight)
 
 ;; This determines the line numbers type. You can make emacs display relative numbers
 ;; if you like.
