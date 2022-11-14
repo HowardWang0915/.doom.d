@@ -190,7 +190,7 @@
        ;;twitter           ; twitter client https://twitter.com/vnought
 
        :config
-       ;;literate
+       literate
        (default +bindings +smartparens))
 
 ;; Give me visual line mode! This has to be loaded early

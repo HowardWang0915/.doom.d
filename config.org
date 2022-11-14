@@ -1,3 +1,7 @@
+#+TITLE: Doom Emacs configuration
+#+AUTHOR: Howard Wang
+* Configuration comments
+#+begin_src emacs-lisp
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.
 ;;
@@ -29,12 +33,21 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+#+end_src
+* Basic setup
 
+In this section, I am going to put some functionality to identify.
+#+begin_src emacs-lisp
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
 (setq user-full-name "+Howard Wang"
       user-mail-address "+howardwang99915@gmail.com")
+#+end_src
 
+* User Interface
+** Font setup
+ Put your font setup over here
+ #+begin_src emacs-lisp
 ;; Doom exposes five (optional) variables for controlling fonts in Doom:
 ;;
 ;; - `doom-font' -- the primary font to use
@@ -60,12 +73,18 @@
       doom-variable-pitch-font (font-spec :family "Source Sans Pro" :size 18)
       doom-serif-font (font-spec :family "Source Serif Pro" :size 18)
       doom-big-font (font-spec :family "JetBrains Mono" :size 24))
+ #+end_src
 
+** Theme setup
+#+begin_src emacs-lisp
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
 (setq doom-theme 'doom-palenight)
+#+end_src
 
+** Interface
+#+begin_src emacs-lisp
 ;; This determines the line numbers type. You can make emacs display relative numbers
 ;; if you like.
 (setq display-line-numbers-type t)
@@ -75,7 +94,12 @@
 (setq maximum-scroll-margin 0.5)
 ; Better mouse scrolling
 (setq mouse-wheel-progressive-speed nil)
+#+end_src
 
+* Org Mode
+** Org Agenda
+*** Function calls
+#+begin_src emacs-lisp
 ;; This portion is for the org mode font setup
 (defun howard/org-refile-to-datetree (&optional file)
   "Refile a subtree to a datetree corresponding to it's timestamp.
@@ -194,6 +218,9 @@ Callers of this function already widen the buffer view."
    #'(lambda () (and
                  (not (+howard/is-project-p))
                  (+howard/is-project-subtree-p)))))
+#+end_src
+*** Variables
+#+begin_src emacs-lisp
 
 ;;;###autoload
 (defvar +howard-org-agenda-block--today-schedule
@@ -250,7 +277,9 @@ Callers of this function already widen the buffer view."
               ((org-agenda-overriding-header "Remaining Project Tasks:")
                (org-agenda-skip-function 'howard/select-project-tasks)))
   "Non-NEXT TODO items belonging to a project.")
-
+#+end_src
+** Org settings
+#+begin_src emacs-lisp
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/Documents/Org-Files")
@@ -277,26 +306,45 @@ Callers of this function already widen the buffer view."
           (sequence "WAITING(w@/!)" "INACTIVE(i)" "LATER(l)" "|" "CANCELED(c@/!)")))
   (setq
    org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿")))
+#+end_src
 
+* Package setting
+
+** Evil
+#+begin_src emacs-lisp
 (after! evil-escape
   (setq-default evil-escape-unordered-key-sequence t)
   (setq-default evil-escape-delay 0.1))
+#+end_src
 
+** Pdf-tools
+ #+begin_src emacs-lisp
 (after! pdf-tools
   (add-hook! pdf-outline-buffer-mode (display-line-numbers-mode -1)))
+ #+end_src
+
+** Eshell
+
+ #+begin_src emacs-lisp
 
 (after! eshell
   (add-hook 'eshell-mode-hook
     (lambda ()
       (make-local-variable 'scroll-margin)
       (setq scroll-margin 0))))
+ #+end_src
 
+** EMMS
+#+begin_src emacs-lisp
 ;; emms configuration
 (after! emms
   (setq emms-info-functions '(emms-info-exiftool))
   (setq emms-seek-seconds 5)
   (setq emms-browser-covers 'emms-browser-cache-thumbnail-async))
+#+end_src
 
+* Key bindings
+#+begin_src emacs-lisp
 ;; Key binding for m-x
 (map!
  :leader
@@ -307,3 +355,4 @@ Callers of this function already widen the buffer view."
  :desc "next buffer" "C-S-H" #'evil-next-buffer
  :desc "prev window" "C-S-K" #'evil-window-prev
  :desc "next window" "C-S-J" #'evil-window-next)
+#+end_src
