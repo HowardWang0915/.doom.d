@@ -61,6 +61,37 @@
       doom-serif-font (font-spec :family "Source Serif Pro" :size 18)
       doom-big-font (font-spec :family "JetBrains Mono" :size 24))
 
+;;;###autoload
+(defun +howard/org-font-setup ()
+  ;; Replace list hyphen with dot
+  (font-lock-add-keywords 'org-mode
+                          '(("^ *\\([-]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+
+  ;; Set faces for heading levels
+  (dolist (face '((org-level-1 . 1.35)
+                  (org-level-2 . 1.25)
+                  (org-level-3 . 1.2)
+                  (org-level-4 . 1.15)
+                  (org-level-5 . 1.1)
+                  (org-level-6 . 1.0)
+                  (org-level-7 . 1.0)
+                  (org-level-8 . 1.0)))
+    (set-face-attribute (car face) nil :font "Dejavu Sans Mono" :weight 'semi-bold :height (cdr face)))
+
+  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
+  (set-face-attribute 'org-block nil :foreground nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-code nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-table nil   :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
+  (set-face-attribute 'org-checkbox nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-document-title nil :inherit 'variable-pitch :weight 'semi-bold :height 1.2)
+  (set-face-attribute 'org-document-info-keyword nil :inherit 'variable-pitch)
+  (set-face-attribute 'org-tag nil :inherit '(shadow fixed-pitch))
+  (set-face-attribute 'org-block-begin-line nil :inherit '(shadow fixed-pitch)))
+
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
@@ -256,8 +287,11 @@ Callers of this function already widen the buffer view."
 (setq org-directory "~/Documents/Org-Files")
 ;; We put our org setup functions here
 (after! org
-  (add-hook 'org-mode-hook
-            (lambda () (display-line-numbers-mode 0)))
+  (add-hook! 'org-mode-hook #'mixed-pitch-mode)
+  (add-hook! 'org-mode-hook #'solaire-mode)
+  (add-hook! 'org-mode-hook
+            #'(lambda () (display-line-numbers-mode 0)))
+  (+howard/org-font-setup)
   (setq org-agenda-files
         '("~/Documents/Org-Files/Tasks/Tasks.org" "~/Documents/Org-Files/Tasks/Archive.org"))
   (setq org-capture-templates
@@ -275,6 +309,7 @@ Callers of this function already widen the buffer view."
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "PROJ(p)" "|" "DONE(d!)")
           (sequence "WAITING(w@/!)" "INACTIVE(i)" "LATER(l)" "|" "CANCELED(c@/!)")))
+  (setq org-hide-emphasis-markers t)
   (setq
    org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿")))
 
@@ -307,3 +342,10 @@ Callers of this function already widen the buffer view."
  :desc "next buffer" "C-S-H" #'evil-next-buffer
  :desc "prev window" "C-S-K" #'evil-window-prev
  :desc "next window" "C-S-J" #'evil-window-next)
+;; Dired keybindings
+(map!
+ :after dired
+ :map dired-mode-map
+ :desc "dired-find-file" :n "l" #'dired-find-file
+ :desc "dired-create-empty-file" :n "a" #'dired-create-empty-file
+ :desc "dired-up-directory" :n "h" #'dired-up-directory)
