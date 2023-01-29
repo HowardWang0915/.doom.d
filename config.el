@@ -327,10 +327,11 @@ Callers of this function already widen the buffer view."
       (setq scroll-margin 0))))
 
 ;; emms configuration
-(after! emms
-  (setq emms-info-functions '(emms-info-exiftool))
-  (setq emms-seek-seconds 5)
-  (setq emms-browser-covers 'emms-browser-cache-thumbnail-async))
+;; (after! emms
+;;   (setq emms-info-functions '(emms-info-exiftool))
+;;   (setq emms-player-list '(emms-player-mpv))
+;;   (setq emms-seek-seconds 5)
+;;   (setq emms-browser-covers 'emms-browser-cache-thumbnail-async))
 
 ;; Key binding for m-x
 (map!
