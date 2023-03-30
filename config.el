@@ -293,7 +293,7 @@ Callers of this function already widen the buffer view."
             #'(lambda () (display-line-numbers-mode 0)))
   (+howard/org-font-setup)
   (setq org-agenda-files
-        '("~/Documents/Org-Files/Tasks/Tasks.org" "~/Documents/Org-Files/Tasks/Archive.org"))
+        '("~/Documents/Org-Files/Tasks/Tasks.org" "~/Documents/Org-Files/Tasks/Archive.org" "~/Documents/Org-Files/Tasks/Gcal.org"))
   (setq org-capture-templates
         '(("t" "Task" entry (file+headline "~/Documents/Org-Files/Tasks/Tasks.org" "Tasks")
            "* %^{Select your option|TODO|LATER|} %?\n SCHEDULED: %^T")
@@ -332,6 +332,16 @@ Callers of this function already widen the buffer view."
 ;;   (setq emms-player-list '(emms-player-mpv))
 ;;   (setq emms-seek-seconds 5)
 ;;   (setq emms-browser-covers 'emms-browser-cache-thumbnail-async))
+
+;; org roam configuration
+(after! org-roam
+  (setq org-roam-dailies-directory "~/Documents/Org-Files/OrgRoam/journal")
+  (setq org-roam-mode-sections
+      (list #'org-roam-backlinks-section
+            #'org-roam-reflinks-section
+            ;; #'org-roam-unlinked-references-section
+            ))
+  (setq org-roam-directory "~/Documents/Org-Files/OrgRoam"))
 
 ;; Key binding for m-x
 (map!
