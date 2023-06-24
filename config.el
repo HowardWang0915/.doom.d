@@ -322,6 +322,10 @@ Callers of this function already widen the buffer view."
   (setq
    org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿")))
 
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((latex . t)))
+
 (after! evil-escape
   (setq-default evil-escape-unordered-key-sequence t)
   (setq-default evil-escape-delay 0.1))

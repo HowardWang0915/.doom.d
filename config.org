@@ -354,6 +354,12 @@ Callers of this function already widen the buffer view."
   (setq
    org-superstar-headline-bullets-list '("⁖" "◉" "○" "✸" "✿")))
 #+end_src
+** Org babel
+#+begin_src emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((latex . t)))
+#+end_src
 
 * Package setting
 
