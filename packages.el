@@ -50,3 +50,4 @@
 ;(unpin! t)
 
 (package! anki-editor)
+(package! google-translate)
