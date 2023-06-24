@@ -104,6 +104,15 @@
 ;; Set a scroll margin to keep cursor in the middle of the screen.
 (setq scroll-margin 12)
 (setq maximum-scroll-margin 0.5)
+;; turn off scroll margins in terminal and shells
+(add-hook! 'vterm-mode-hook
+          (lambda ()
+            (make-local-variable 'scroll-margin)
+            (setq scroll-margin 0)))
+(add-hook! 'doom-dashboard-mode-hook
+          (lambda ()
+            (make-local-variable 'scroll-margin)
+            (setq scroll-margin 0)))
 ; Better mouse scrolling
 (setq mouse-wheel-progressive-speed nil)
 
